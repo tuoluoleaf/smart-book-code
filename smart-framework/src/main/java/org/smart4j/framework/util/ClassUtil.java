@@ -1,5 +1,8 @@
 package org.smart4j.framework.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.net.JarURLConnection;
@@ -9,8 +12,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 类操作工具类
@@ -92,10 +93,12 @@ public final class ClassUtil {
 
     private static void addClass(Set<Class<?>> classSet, String packagePath, String packageName) {
         File[] files = new File(packagePath).listFiles(new FileFilter() {
+            @Override
             public boolean accept(File file) {
                 return (file.isFile() && file.getName().endsWith(".class")) || file.isDirectory();
             }
         });
+
         for (File file : files) {
             String fileName = file.getName();
             if (file.isFile()) {
